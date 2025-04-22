@@ -1,19 +1,8 @@
 describe('Login', () => {
 
   it('Deve logar com sucesso', () => {
-    cy.viewport(1440, 900)
-    cy.visit('http://localhost:3000')
-
-    cy.get('#email')
-      .should('be.visible')
-      .type('papito@webdojo.com')
-    cy.get('#password')
-      .should('be.visible')
-      .type('katana123')
-
-    cy.contains('button', 'Entrar')
-      .should('be.visible')
-      .click()
+    cy.iniciar()
+    cy.submeterLogin('papito@webdojo.com', 'katana123')
 
     cy.get('[data-cy="user-name"]')
       .should('be.visible')
@@ -25,38 +14,16 @@ describe('Login', () => {
   })
 
   it('Não deve logar com senha incorreta', () => {
-    cy.viewport(1440, 900)
-    cy.visit('http://localhost:3000')
-
-    cy.get('#email')
-      .should('be.visible')
-      .type('papito@webdojo.com')
-    cy.get('#password')
-      .should('be.visible')
-      .type('katana321')
-
-    cy.contains('button', 'Entrar')
-      .should('be.visible')
-      .click()
+    cy.iniciar()
+    cy.submeterLogin('papito@webdojo.com', 'katanaIncorreta')
 
     cy.contains('Acesso negado! Tente novamente.')
       .should('be.visible')
   })
 
   it('Não deve logar com e-mail não cadastrado', () => {
-    cy.viewport(1440, 900)
-    cy.visit('http://localhost:3000')
-
-    cy.get('#email')
-      .should('be.visible')
-      .type('teste@webdojo.com')
-    cy.get('#password')
-      .should('be.visible')
-      .type('katana123')
-
-    cy.contains('button', 'Entrar')
-      .should('be.visible')
-      .click()
+    cy.iniciar()
+    cy.submeterLogin('404@webdojo.com', 'katana321')
 
     cy.contains('Acesso negado! Tente novamente.')
       .should('be.visible')
