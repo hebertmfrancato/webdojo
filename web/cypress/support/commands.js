@@ -24,12 +24,12 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('iniciar', () => {
+Cypress.Commands.add('start', () => {
     cy.viewport(1440, 900)
     cy.visit('http://localhost:3000')
 })
 
-Cypress.Commands.add('submeterLogin', (email, password) => {
+Cypress.Commands.add('submitLoginForm', (email, password) => {
     cy.get('#email')
       .should('be.visible')
       .type(email)
@@ -41,4 +41,13 @@ Cypress.Commands.add('submeterLogin', (email, password) => {
     cy.contains('button', 'Entrar')
       .should('be.visible')
       .click()
+})
+
+Cypress.Commands.add('goTo', (buttonName, pageTitle) => {
+  cy.contains('button', buttonName)
+          .should('be.visible')
+          .click()
+
+      cy.contains('h1', pageTitle)
+          .should('be.visible')
 })
